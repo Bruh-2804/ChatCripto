@@ -1,0 +1,93 @@
+/* Estilo Global */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', monospace;
+  background-color: #1e1e1e;
+  color: #00ff9d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Tela de Cadastro */
+#register {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#register input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+  background-color: #333;
+  color: #00ff9d;
+  outline: none;
+}
+
+#register button {
+  padding: 10px;
+  width: 320px;
+  background-color: #00ff9d;
+  color: #1e1e1e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#register button:hover {
+  background-color: #00cc7a;
+}
+
+/* Tela de Chat */
+#chat {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  width: 400px;
+  height: 80%;
+  border: 2px solid #00ff9d;
+  border-radius: 10px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+#messages div {
+  margin-bottom: 10px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#messageInput {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #00ff9d;
+  outline: none;
+}
+
+#chat button {
+  padding: 10px;
+  background-color: #00ff9d;
+  color: #1e1e1e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#chat button:hover {
+  background-color: #00cc7a;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin-Chat-Cripto</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+</head>
+<body>
+  <div id="register">
+    <h1>Bem-vindo</h1>
+    <input id="usernameInput" type="text" placeholder="Escolha seu nome de usuário" />
+    <button onclick="registerUser()">Cadastrar</button>
+  </div>
+
+  <div id="chat">
+    <div id="messages"></div>
+    <input id="messageInput" type="text" placeholder="Digite sua mensagem" />
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+
+  <script>
+    const socket = io();
+    const secretKey = 'minha-chave-secreta';  // Chave de criptografia
+
+    function encryptMessage(message) {
+      return CryptoJS.AES.encrypt(message, secretKey).toString();
+    }
+
+    function decryptMessage(encryptedMessage) {
+      const bytes = CryptoJS.AES.decrypt(encryptedMessage, secretKey);
+      return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
+    function registerUser() {
+      const username = document.getElementById('usernameInput').value;
+      if (username.trim()) {
+        socket.emit('register', username);  // Registra o usuário no servidor
+        document.getElementById('register').style.display = 'none';
+        document.getElementById('chat').style.display = 'flex';
+      }
+    }
+
+    function sendMessage() {
+      const message = document.getElementById('messageInput').value;
+      if (message.trim()) {
+        const encryptedMessage = encryptMessage(message);
+        socket.emit('message', encryptedMessage);
+        document.getElementById('messageInput').value = '';
+      }
+    }
+
+    socket.on('message', (data) => {
+      const decryptedMessage = decryptMessage(data.encryptedMessage);
+      const messageElement = document.createElement('div');
+      messageElement.textContent = `${data.username}: ${decryptedMessage}`;
+      document.getElementById('messages').appendChild(messageElement);
+    });
+  </script>
+</body>
+</html>
+
